@@ -1,0 +1,23 @@
+// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+  // RECOMMENDED: remove custom "output" to use the standard @prisma/client import
+  // output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  description String?
+  category    String   // e.g. "toys" | "food" | "accessories"
+  priceCents  Int      // store money as cents
+  imageUrl    String?
+  inStock     Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
